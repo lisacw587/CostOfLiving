@@ -2,6 +2,8 @@ from flask import Flask, render_template
 import pandas as pd
 import plotly.express as px
 
+app = Flask(__name__)
+
 # load dataset
 df = pd.read_csv("cost_of_living_us.csv")
 
@@ -9,7 +11,7 @@ df = pd.read_csv("cost_of_living_us.csv")
 def index():
     # sample county
     county = "Travis County"
-    county_data = df[df["county"] == county.iloc[0]]
+    county_data = df[df["county"] == county].iloc[0]
 
     # expense breakdown
     expenses = {
@@ -25,7 +27,7 @@ def index():
     exp_df = pd.DataFrame(list(expenses.items()), columns=["Category", "Cost"])
 
     # pie chart
-    fig = px.pie(exp.df, values="Cost", names="Category", title=f"Expense Breakdown - {county}")
+    fig = px.pie(exp_df, values="Cost", names="Category", title=f"Expense Breakdown - {county}")
     graph_html = fig.to_html(full_html=False)
 
     return render_template("index.html", plot=graph_html)
