@@ -4,7 +4,20 @@
     <title>Cost Of Living Explorer</title>
 </head>
 <body>
-    <hi>US Family Budget Explorer</hi>
+    <h1>US Family Budget Explorer</h1>
+
+    <!-- Dropdown form -->
+    <form method="get" action="/">
+        <label for="county"> >Choose a county:</label>
+        <select name="county" id="county">
+            {% for c in counties %}
+                <option value="{{ c }}" {% if c == selected_county %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Show</button>
+    </form>
+
+    <!-- Chart -->
     <div>{{ plot | safe }} </div>
 </body>
 </html>
